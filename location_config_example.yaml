@@ -1,0 +1,10 @@
+---
+name: linux_laptop_1
+pools:
+- name: wow-ah
+  export: true
+  import_path: "/data"
+  included_matchers:
+  - "**/*.*"
+  excluded_matchers:
+  - "**/trash/*"
