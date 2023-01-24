@@ -1,7 +1,7 @@
 require_relative "./petasos_location"
 
 @node_config = {
-  name: "petasos-node-a",
+  name: "petasos-node-b",
   locations: [
     {
       path: File.join(File.dirname(__FILE__), "location_a"),

@@ -1,9 +1,8 @@
 ---
-name: linux-laptop-1
+name: linux-laptop-source
 pools:
 - name: wow-ah
   export: true
-  import_path: "/data"
   included_matchers:
   - "data/**/*.*"
   excluded_matchers:

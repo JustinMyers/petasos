@@ -1,0 +1,5 @@
+---
+name: linux-laptop-storage
+pools:
+- name: wow-ah
+  import_path: "/data"
