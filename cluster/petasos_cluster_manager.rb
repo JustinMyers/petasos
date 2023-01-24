@@ -4,6 +4,7 @@
   {
     name: "petasos-node-1",
     host: "justin@localhost",
+    path: "/home/justin/play/petasos/node_a",
   },
 ]
 
