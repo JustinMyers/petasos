@@ -5,6 +5,6 @@ pools:
   export: true
   import_path: "/data"
   included_matchers:
-  - "**/*.*"
+  - "data/**/*.*"
   excluded_matchers:
   - "**/trash/*"
