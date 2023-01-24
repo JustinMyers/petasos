@@ -1,10 +1,10 @@
-require "./petasos_location"
+require_relative "./petasos_location"
 
 @node_config = {
   name: "petasos-node-1",
   locations: [
     {
-      path: File.join(Dir.pwd),
+      path: File.join(File.dirname(__FILE__), "location_a"),
     },
   ],
 }
@@ -18,7 +18,7 @@ require "./petasos_location"
     @pools[pool["name"]] << pool_import_path if pool_import_path
   end
 end
-File.open(File.join("imports_#{@node_config[:name]}.yaml"), "w") do |out|
+File.open(File.join(File.dirname(__FILE__), "imports_#{@node_config[:name]}.yaml"), "w") do |out|
   YAML.dump(@pools, out)
 end
 

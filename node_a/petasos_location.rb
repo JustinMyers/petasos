@@ -91,7 +91,7 @@ class PetasosLocation
   end
 
   def create_file_export_list(pool, file_paths)
-    File.open(File.join("exports_#{node_name}_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml"), "w") do |out|
+    File.open(File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml"), "w") do |out|
       YAML.dump(file_paths, out)
     end
   end
