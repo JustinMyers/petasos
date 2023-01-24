@@ -4,7 +4,7 @@ require "./petasos_location"
   name: "petasos-node-1",
   locations: [
     {
-      path: File.join(Dir.pwd, "."),
+      path: File.join(Dir.pwd),
     },
   ],
 }
