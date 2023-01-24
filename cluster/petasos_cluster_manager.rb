@@ -1,8 +1,14 @@
 # ssh -t xxx.xxx.xxx.xxx "cd /directory_wanted ; bash --login"
 
-# for every node location
+@nodes = [
+  {
+    name: "petasos-node-1",
+    host: "justin@localhost",
+  },
+]
 
-# ssh into it and grab its import/export file
+# for every node location
+# ssh into it and grab its imports and exports files
 
 # with the import/export files I have, build a hash of pools
 # with lists of places files come from and lists of places files go to
