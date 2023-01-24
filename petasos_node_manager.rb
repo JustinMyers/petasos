@@ -18,7 +18,7 @@ require "./petasos_location"
     @pools[pool["name"]] << pool_import_path if pool_import_path
   end
 end
-File.open(File.join("#{@node_config[:name]}_pool-import-locations.yaml"), "w") do |out|
+File.open(File.join("imports_#{@node_config[:name]}.yaml"), "w") do |out|
   YAML.dump(@pools, out)
 end
 
