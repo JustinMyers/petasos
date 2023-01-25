@@ -4,7 +4,7 @@ require "rake"
 class PetasosLocation
   attr_reader :path, :config, :node_name
 
-  IGNORED_FILES = ["location_config.yaml", "*_seen_files.yaml", "export*.yaml"]
+  IGNORED_FILES = ["location_config.yaml", "seen_*.yaml"]
 
   def initialize(path, node_name)
     @path = path
@@ -63,19 +63,19 @@ class PetasosLocation
   end
 
   def read_seen_pool_files(pool)
-    seen_files = YAML.load_file(File.join(path, "#{pool["name"]}_seen_files.yaml"))
+    YAML.load_file(File.join(path, "seen_#{pool["name"]}.yaml"))
   end
 
   def update_seen_pool_files(pool, file_paths)
-    File.open(File.join(path, "#{pool["name"]}_seen_files.yaml"), "w") do |out|
+    File.open(File.join(path, "seen_#{pool["name"]}.yaml"), "w") do |out|
       YAML.dump(file_paths, out)
     end
   end
 
   def initialize_all_seen_pool_files
     pools.each do |pool|
-      unless File.file?(File.join(path, "#{pool["name"]}_seen_files.yaml"))
-        File.open(File.join(path, "#{pool["name"]}_seen_files.yaml"), "w") do |out|
+      unless File.file?(File.join(path, "seen_#{pool["name"]}.yaml"))
+        File.open(File.join(path, "seen_#{pool["name"]}.yaml"), "w") do |out|
           YAML.dump([], out)
         end
       end
@@ -84,7 +84,7 @@ class PetasosLocation
 
   def clear_all_seen_pool_files
     pools.each do |pool|
-      File.open(File.join(path, "#{pool["name"]}_seen_files.yaml"), "w") do |out|
+      File.open(File.join(path, "seen_#{pool["name"]}.yaml"), "w") do |out|
         YAML.dump([], out)
       end
     end
