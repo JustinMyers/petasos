@@ -24,6 +24,6 @@ end
 
 @node_config[:locations].each do |location|
   p = PetasosLocation.new(location[:path], @node_config[:name])
-  p.clear_all_seen_pool_files
+  # p.clear_all_seen_pool_files
   p.run
 end
