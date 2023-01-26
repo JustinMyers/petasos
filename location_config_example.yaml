@@ -8,3 +8,10 @@ pools:
   - "**/*.*"
   excluded_matchers:
   - "**/trash/*"
+  after_seen:
+  - "rename it!"
+  after_export:
+  - "delete it!"
+
+
+# 10 * * * * cd /home/justin/inbox; for FILE in *; do /usr/local/hadoop/bin/hadoop fs -put $FILE && mv $FILE ../trash; done;

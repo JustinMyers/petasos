@@ -14,6 +14,12 @@ class PetasosLocation
   end
 
   def run
+    # clean up any matching export/completed files
+    FileList.new(File.join(File.dirname(__FILE__), "completed_exports_#{node_name}_#{@config["name"]}*.yaml")).each do |completed_export_file_path|
+      matching_export_file_path = completed_export_file_path.split("completed_").join
+      `rm #{matching_export_file_path}` if File.file?(matching_export_file_path)
+    end
+
     pools.each do |pool|
       # get all filenames in this location that belong to this pool
       current_files = current_pool_files(pool)
