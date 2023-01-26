@@ -43,14 +43,20 @@ end
 # for each exporting node per pool, ssh into it and grab its export files for the pools
 # if there are export files I haven't seen before, scp all those files into each of the
 # pool import locations (very much like the location process)
-FileList.new(File.join(File.dirname(File.absolute_path(__FILE__)), "exports_*")).each do |import_file_path|
-  export_paths = YAML.load_file(import_file_path)
-  import_filename = import_file_path.split(".")[0]
-  label, node_name, location_name, pool_name, datetime = import_filename.split("_")
+FileList.new(File.join(File.dirname(File.absolute_path(__FILE__)), "exports_*")).each do |exports_file_path|
+  export_filename = File.basename(exports_file_path, ".*")
+  label, node_name, location_name, pool_name, datetime = exports_file_path.split("_")
   node = find_node(node_name)
+  export_paths = YAML.load_file(exports_file_path)
   export_paths.each do |export_path|
     @pools[pool_name].each do |pool_storage|
       `scp #{node[:host]}:#{export_path}* #{pool_storage}`
     end
   end
+  # mark it as completed
+  completed_export_file_path = "#{File.dirname(exports_file_path)}/completed_#{File.basename(exports_file_path)}"
+  `mv #{exports_file_path} #{completed_export_file_path}`
+  # and then put it back where it came from
+  `scp #{completed_export_file_path} #{node[:host]}:#{node[:path]}`
+  `rm #{completed_export_file_path}`
 end
