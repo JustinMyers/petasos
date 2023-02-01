@@ -4,7 +4,7 @@ require "rake"
 class PetasosLocation
   attr_reader :path, :config, :node_name
 
-  IGNORED_FILES = ["location_config.yaml", "seen_*.yaml", "export*.yaml"]
+  IGNORED_FILES = ["location_config.yaml", "seen_*.yaml"]
 
   def initialize(path, node_name)
     @path = path
@@ -14,6 +14,12 @@ class PetasosLocation
   end
 
   def run
+    # delete exports file if completed file exists
+    FileList.new(File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}*.yaml")).each do |export_file_path|
+      completed_export_file_path = "completed-" + export_file_path.split("completed-").join
+      `rm #{export_file_path}` if File.file?(completed_export_file_path)
+    end
+
     pools.each do |pool|
       # get all filenames in this location that belong to this pool
       current_files = current_pool_files(pool)
@@ -67,32 +73,32 @@ class PetasosLocation
   end
 
   def update_seen_pool_files(pool, file_paths)
-    File.open(File.join(path, "seen_#{pool["name"]}.yaml"), "w") do |out|
-      YAML.dump(file_paths, out)
-    end
+    yaml_path = File.join(path, "seen_#{pool["name"]}.yaml")
+    write_yaml(yaml_path, file_paths)
   end
 
   def initialize_all_seen_pool_files
     pools.each do |pool|
-      unless File.file?(File.join(path, "seen_#{pool["name"]}.yaml"))
-        File.open(File.join(path, "seen_#{pool["name"]}.yaml"), "w") do |out|
-          YAML.dump([], out)
-        end
-      end
+      yaml_path = File.join(path, "seen_#{pool["name"]}.yaml")
+      write_yaml(yaml_path, []) unless File.file?(yaml_path)
     end
   end
 
   def clear_all_seen_pool_files
     pools.each do |pool|
-      File.open(File.join(path, "seen_#{pool["name"]}.yaml"), "w") do |out|
-        YAML.dump([], out)
-      end
+      yaml_path = File.join(path, "seen_#{pool["name"]}.yaml")
+      write_yaml(yaml_path, [])
     end
   end
 
   def create_file_export_list(pool, file_paths)
-    File.open(File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml"), "w") do |out|
-      YAML.dump(file_paths, out)
+    yaml_path = File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml")
+    write_yaml(yaml_path, file_paths)
+  end
+
+  def write_yaml(yaml_path, content)
+    File.open(yaml_path, "w") do |out|
+      YAML.dump(content, out)
     end
   end
 end

@@ -54,7 +54,7 @@ FileList.new(File.join(File.dirname(File.absolute_path(__FILE__)), "exports_*"))
     end
   end
   # mark it as completed
-  completed_export_file_path = "#{File.dirname(exports_file_path)}/completed_#{File.basename(exports_file_path)}"
+  completed_export_file_path = "#{File.dirname(exports_file_path)}/completed-#{File.basename(exports_file_path)}"
   `mv #{exports_file_path} #{completed_export_file_path}`
   # and then put it back where it came from
   `scp #{completed_export_file_path} #{node[:host]}:#{node[:path]}`

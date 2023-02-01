@@ -16,7 +16,7 @@ class PetasosLocation
   def run
     # delete exports file if completed file exists
     FileList.new(File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}*.yaml")).each do |export_file_path|
-      completed_export_file_path = "completed_" + export_file_path.split("completed_").join
+      completed_export_file_path = "completed-" + export_file_path.split("completed-").join
       `rm #{export_file_path}` if File.file?(completed_export_file_path)
     end
 
