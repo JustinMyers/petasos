@@ -1,9 +1,0 @@
----
-name: linux-laptop-source
-pools:
-- name: wow-ah
-  export: true
-  included_matchers:
-  - "data/**/*.*"
-  excluded_matchers:
-  - "**/trash/*"
