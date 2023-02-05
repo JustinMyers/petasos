@@ -16,7 +16,24 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+Here is an example petasos_location_config.yaml file:
+
+```
+---
+name: linux_laptop_1
+pools:
+- name: wow-ah
+  export: true
+  import_path: "/data"
+  included_matchers:
+  - "**/*.*"
+  excluded_matchers:
+  - "**/trash/*"
+  after_seen:
+  - "rename it!"
+  after_export:
+  - "delete it!"
+```
 
 ## Development
 
