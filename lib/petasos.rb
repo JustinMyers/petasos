@@ -11,12 +11,12 @@ module Petasos
   end
 
   def process_locations
-    # look for petasos_location_*.yaml files
+    # look for petasos_location-*.yaml files
     # and pass each one to a petasos location manager
   end
 
   def process_distribution
-    # look for petasos_distribution_*.yaml files
+    # look for petasos_distribution-*.yaml files
     # and pass each one to a petasos distribution manager
   end
 end
