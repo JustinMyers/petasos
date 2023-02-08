@@ -35,6 +35,18 @@ pools:
   - "delete it!"
 ```
 
+Here is an example petasos_distribution_config.yaml file:
+
+```
+---
+- name: "petasos-node-a",
+  host: "justin@localhost",
+  path: "/home/justin/play/petasos/node_a",
+- name: "petasos-node-b",
+  host: "justin@localhost",
+  path: "/home/justin/play/petasos/node_b",
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
