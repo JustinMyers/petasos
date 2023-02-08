@@ -2,4 +2,4 @@
 
 require 'petasos'
 
-Petasos.run
+Petasos.new.run
