@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rake'
-require 'yaml'
+require "rake"
+require "yaml"
 
 class Petasos
   class Error < StandardError; end
@@ -23,7 +23,7 @@ class Petasos
 
   def process_distribution
     # look for petasos_distribution-*.yaml files
-    # and pass each one to a petasos distribution 
+    # and pass each one to a petasos distribution
 
     # with the import/export files I have, build a hash of pools
     # with lists of places files come from and lists of places files go to
@@ -63,7 +63,6 @@ class Petasos
   def find_node(node_name)
     @nodes.detect { |n| n[:name] == node_name }
   end
-  
 end
 
-require 'petasos/location'
+require "petasos/location"
