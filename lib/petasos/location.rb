@@ -51,7 +51,7 @@ class Petasos::Location
     pool_imports = Hash.new { |h, k| h[k] = [] }
     pools.each do |pool|
       pool_import_path = pool["import_path"]
-      pool_imports[pool["name"]] << File.join(Dir.pwd, pool_import_path) if pool_import_path
+      pool_imports[pool["name"]] << File.join(pool["path"], pool_import_path) if pool_import_path
     end
     write_yaml("imports_#{config["name"]}.yaml", pool_imports)
   end

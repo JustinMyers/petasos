@@ -32,9 +32,9 @@ class Petasos
     # with the import/export files I have, build a hash of pools
     # with lists of places files come from and lists of places files go to
     @pools = Hash.new { |h, k| h[k] = [] }
-    FileList.new(File.join(Dir.pwd, "imports_*")).each do |import_file_path|
+    FileList.new("**/imports_*").each do |import_file_path|
       pool_import_locations = YAML.load_file(import_file_path)
-      node_name = import_file_path.split("_")[1].split(".")[0]
+      node_name = File.basename(File.dirname(import_file_path))
       node = find_node(node_name)
       pool_import_locations.each_pair do |k, v|
         v.map! { |import_path| "#{node[:host]}:#{import_path}" }
@@ -47,8 +47,6 @@ class Petasos
     # pool import locations (very much like the location process)
     FileList.new(File.join(Dir.pwd, "**/exports_*")).each do |exports_file_path|
       node_name = File.basename(File.dirname(exports_file_path))
-      puts " ^ " * 5
-      puts node_name
       export_filename = File.basename(exports_file_path, ".*")
       label, location_name, pool_name, datetime = exports_file_path.split("_")
       node = find_node(node_name)
