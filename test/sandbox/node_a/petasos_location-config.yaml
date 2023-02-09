@@ -7,4 +7,3 @@
     - "data/**/*.*"
     excluded_matchers:
     - "**/trash/*"
-    import_path: "/data"
