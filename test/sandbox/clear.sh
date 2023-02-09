@@ -1,6 +1,6 @@
-rm cluster/imports_*
-rm cluster/exports_*
-rm cluster/completed-*
+rm imports_*
+rm exports_*
+rm completed-*
 rm node_a/imports_*
 rm node_a/exports_*
 rm node_a/completed-*
