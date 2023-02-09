@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rake'
-require 'yaml'
+require "rake"
+require "yaml"
 
 class Petasos::Location
   attr_reader :config
@@ -13,13 +13,9 @@ class Petasos::Location
   end
 
   def run
-    pp @config
-  end
-  
-  def runz
     # delete exports file if completed file exists
-    FileList.new(File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}*.yaml")).each do |export_file_path|
-      completed_export_file_path = "completed-" + export_file_path.split("completed-").join
+    FileList.new(File.join(Dir.pwd, "exports_#{@config["name"]}*.yaml")).each do |export_file_path|
+      completed_export_file_path = "completed-" + export_file_path
       `rm #{export_file_path}` if File.file?(completed_export_file_path)
     end
 
@@ -47,36 +43,25 @@ class Petasos::Location
   end
 
   def pools
-    @config["pools"]
-  end
-
-  def pool_import_path(pool)
-    import_path = pools.detect { |p| p["name"] == pool["name"] }&.[]("import_path")
-    if import_path
-      File.join(import_path)
-    else
-      nil
-    end
+    config["pools"]
   end
 
   def update_imports_file
     # a list of pools and their import paths from locations
     pool_imports = Hash.new { |h, k| h[k] = [] }
     pools.each do |pool|
-      pool_import_path = pool_import_path(pool)
-      pool_imports[pool["name"]] << pool_import_path if pool_import_path
+      pool_import_path = pool["import_path"]
+      pool_imports[pool["name"]] << File.join(Dir.pwd, pool_import_path) if pool_import_path
     end
-    File.open("imports_#{@config["name"]}.yaml", "w") do |out|
-      YAML.dump(pool_imports, out)
-    end
+    write_yaml("imports_#{config["name"]}.yaml", pool_imports)
   end
 
   def included_matchers(pool)
-    (pool["included_matchers"] || ["**/*.*"]).map { |fp| File.join(path, fp) }
+    (pool["included_matchers"] || ["**/*.*"]).map { |fp| File.join(pool["path"], fp) }
   end
 
   def excluded_matchers(pool)
-    (IGNORED_FILES + (pool["excluded_matchers"] || [])).map { |fp| File.join(path, fp) }
+    (pool["excluded_matchers"] || []).map { |fp| File.join(pool["path"], fp) }
   end
 
   def current_pool_files(pool)
@@ -84,17 +69,17 @@ class Petasos::Location
   end
 
   def read_seen_pool_files(pool)
-    YAML.load_file(File.join(path, "seen_#{pool["name"]}.yaml"))
+    YAML.load_file(File.join(Dir.pwd, "seen_#{config["name"]}_#{pool["name"]}.yaml"))
   end
 
   def update_seen_pool_files(pool, file_paths)
-    yaml_path = File.join(path, "seen_#{pool["name"]}.yaml")
+    yaml_path = File.join(pool["path"], "seen_#{config["name"]}_#{pool["name"]}.yaml")
     write_yaml(yaml_path, file_paths)
   end
 
   def initialize_all_seen_pool_files
     pools.each do |pool|
-      yaml_path = "seen_#{pool["name"]}.yaml"
+      yaml_path = "seen_#{config["name"]}_#{pool["name"]}.yaml"
       write_yaml(yaml_path, []) unless File.file?(yaml_path)
     end
   end

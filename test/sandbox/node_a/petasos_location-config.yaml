@@ -3,6 +3,7 @@
   pools:
   - name: wow-ah
     export: true
+    path: /home/justin/play/petasos/test/sandbox/node_a/
     included_matchers:
     - "data/**/*.*"
     excluded_matchers:

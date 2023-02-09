@@ -1,7 +1,7 @@
 ---
 - :name: petasos-node-a
-  :host: codespace@localhost
-  :path: "/workspaces/petasos/test/sandbox/node_a"
+  :host: justin@localhost
+  :path: "/home/justin/play/petasos/test/sandbox/node_a"
 - :name: petasos-node-b
-  :host: codespace@localhost
-  :path: "/workspaces/petasos/test/sandbox/node_b"
+  :host: justin@localhost
+  :path: "/home/justin/play/petasos/test/sandbox/node_b"
