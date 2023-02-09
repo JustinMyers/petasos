@@ -8,7 +8,7 @@ class Petasos
 
   def run
     process_locations
-    # process_distribution
+    process_distribution
   end
 
   def process_locations
@@ -24,11 +24,15 @@ class Petasos
   def process_distribution
     # look for petasos_distribution-*.yaml files
     # and pass each one to a petasos distribution
+    @nodes = YAML.load_file(File.join(Dir.pwd, "petasos_distribution-config.yaml"))
+    @nodes.each do |node|
+      Petasos::Node.new(node).grab_imports_and_exports
+    end
 
     # with the import/export files I have, build a hash of pools
     # with lists of places files come from and lists of places files go to
     @pools = Hash.new { |h, k| h[k] = [] }
-    FileList.new(File.join(File.dirname(File.absolute_path(__FILE__)), "imports_*")).each do |import_file_path|
+    FileList.new(File.join(Dir.pwd, "imports_*")).each do |import_file_path|
       pool_import_locations = YAML.load_file(import_file_path)
       node_name = import_file_path.split("_")[1].split(".")[0]
       node = find_node(node_name)
@@ -41,7 +45,7 @@ class Petasos
     # for each exporting node per pool, ssh into it and grab its export files for the pools
     # if there are export files I haven't seen before, scp all those files into each of the
     # pool import locations (very much like the location process)
-    FileList.new(File.join(File.dirname(File.absolute_path(__FILE__)), "exports_*")).each do |exports_file_path|
+    FileList.new(File.join(Dir.pwd, "exports_*")).each do |exports_file_path|
       export_filename = File.basename(exports_file_path, ".*")
       label, node_name, location_name, pool_name, datetime = exports_file_path.split("_")
       node = find_node(node_name)
@@ -52,7 +56,7 @@ class Petasos
         end
       end
       # mark it as completed
-      completed_export_file_path = "#{File.dirname(exports_file_path)}/completed-#{File.basename(exports_file_path)}"
+      completed_export_file_path = File.join(Dir.pwd, "completed-#{File.basename(exports_file_path)}")
       `mv #{exports_file_path} #{completed_export_file_path}`
       # and then put it back where it came from
       `scp #{completed_export_file_path} #{node[:host]}:#{node[:path]}`
@@ -66,3 +70,4 @@ class Petasos
 end
 
 require "petasos/location"
+require "petasos/node"

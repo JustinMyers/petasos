@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rake'
-require 'yaml'
+require "rake"
+require "yaml"
 
 class Petasos::Node
   attr_reader :config
@@ -11,7 +11,8 @@ class Petasos::Node
   end
 
   def grab_imports_and_exports
-    `rsync #{config[:host]}:#{config[:path]}/imports* #{File.dirname(__FILE__)}`
-    `rsync --ignore-missing-args --ignore-existing #{config[:host]}:#{config[:path]}/exports* #{File.dirname(__FILE__)}`
+    `mkdir #{config["name"]}`
+    `rsync #{config[:host]}:#{config[:path]}/imports* #{Dir.pwd}/#{config[:name]}/`
+    `rsync --ignore-missing-args --ignore-existing #{config[:host]}:#{config[:path]}/exports* #{Dir.pwd}/#{config["name"]}/`
   end
 end

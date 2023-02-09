@@ -9,5 +9,5 @@ echo "Running in node_b"
 cd ../node_b
 ruby -I../../../lib ../../../bin/petasos
 echo "Running in sandbox"
-cd ..
-ruby -I../../lib ../../bin/petasos
+cd ../distributor
+ruby -I../../../lib ../../../bin/petasos
