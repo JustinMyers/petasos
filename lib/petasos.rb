@@ -8,7 +8,7 @@ class Petasos
 
   def run
     process_locations
-    process_distribution
+    process_distribution if File.file?(File.join(Dir.pwd, "petasos_distribution-config.yaml"))
   end
 
   def process_locations
@@ -45,9 +45,12 @@ class Petasos
     # for each exporting node per pool, ssh into it and grab its export files for the pools
     # if there are export files I haven't seen before, scp all those files into each of the
     # pool import locations (very much like the location process)
-    FileList.new(File.join(Dir.pwd, "exports_*")).each do |exports_file_path|
+    FileList.new(File.join(Dir.pwd, "**/exports_*")).each do |exports_file_path|
+      node_name = File.basename(File.dirname(exports_file_path))
+      puts " ^ " * 5
+      puts node_name
       export_filename = File.basename(exports_file_path, ".*")
-      label, node_name, location_name, pool_name, datetime = exports_file_path.split("_")
+      label, location_name, pool_name, datetime = exports_file_path.split("_")
       node = find_node(node_name)
       export_paths = YAML.load_file(exports_file_path)
       export_paths.each do |export_path|
