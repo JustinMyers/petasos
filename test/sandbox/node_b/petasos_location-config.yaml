@@ -2,5 +2,5 @@
 - name: linux-laptop-storage
   pools:
   - name: wow-ah
-    path: /home/justin/play/petasos/test/sandbox/node_b
+    path: /home/justin/play/petasos/test/sandbox/node_b/location_a
     import_path: "/data"

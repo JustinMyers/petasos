@@ -73,7 +73,7 @@ class Petasos::Location
   end
 
   def update_seen_pool_files(pool, file_paths)
-    yaml_path = File.join(pool["path"], "seen_#{config["name"]}_#{pool["name"]}.yaml")
+    yaml_path = File.join(Dir.pwd, "seen_#{config["name"]}_#{pool["name"]}.yaml")
     write_yaml(yaml_path, file_paths)
   end
 
@@ -92,7 +92,7 @@ class Petasos::Location
   end
 
   def create_file_export_list(pool, file_paths)
-    yaml_path = File.join(File.dirname(__FILE__), "exports_#{node_name}_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml")
+    yaml_path = File.join(Dir.pwd, "exports_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml")
     write_yaml(yaml_path, file_paths)
   end
 
