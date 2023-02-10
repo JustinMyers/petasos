@@ -24,7 +24,7 @@ class Petasos
   def process_distribution
     # look for petasos_distribution-*.yaml files
     # and pass each one to a petasos distribution
-    FileList.new("petasos_distribution-*.yaml").each do |location_file|
+    FileList.new("petasos_distribution-*.yaml").each do |distribution_file|
       node_config = YAML.load_file(distribution_file)
       Petasos::Distributor.new(node_config).run
     end

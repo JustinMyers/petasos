@@ -62,6 +62,7 @@ class Petasos::Location
       end
     end
     manifest_hash = {
+      "name" => config["name"],
       "imports" => pool_imports,
       "exports" => pool_exports,
     }
