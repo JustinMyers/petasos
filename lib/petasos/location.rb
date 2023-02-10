@@ -13,9 +13,6 @@ class Petasos::Location
   end
 
   def run
-  end
-
-  def runz
     # delete exports file if completed file exists
     FileList.new(File.join(Dir.pwd, "exports_#{@config["name"]}*.yaml")).each do |export_file_path|
       completed_export_file_path = "completed-" + export_file_path
