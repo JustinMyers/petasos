@@ -14,6 +14,14 @@ class Petasos::Node
     parse_manifests
   end
 
+  def host
+    @config["host"]
+  end
+
+  def path
+    @config["path"]
+  end
+
   def grab_manifest_and_exports
     `rsync #{config["host"]}:#{config["path"]}/manifest* #{config["name"]}/`
     `rsync --ignore-missing-args --ignore-existing #{config["host"]}:#{config["path"]}/exports* #{config["name"]}/`
