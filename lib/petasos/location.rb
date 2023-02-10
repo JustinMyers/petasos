@@ -68,7 +68,7 @@ class Petasos::Location
       "imports" => pool_imports,
       "exports" => pool_exports,
     }
-    write_yaml("manifest_#{config["name"]}.yaml", pool_imports)
+    write_yaml("manifest_#{config["name"]}.yaml", manifest_hash)
   end
 
   def included_matchers(pool)
