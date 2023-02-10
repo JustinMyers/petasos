@@ -4,3 +4,4 @@
   - name: wow-ah
     path: /home/justin/play/petasos/test/sandbox/node_b/location_a
     import_path: "/data"
+    backfill: true

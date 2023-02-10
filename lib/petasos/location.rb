@@ -9,10 +9,13 @@ class Petasos::Location
   def initialize(config)
     @config = config
     initialize_all_seen_pool_files
-    update_imports_file
+    update_manifest_file
   end
 
   def run
+  end
+
+  def runz
     # delete exports file if completed file exists
     FileList.new(File.join(Dir.pwd, "exports_#{@config["name"]}*.yaml")).each do |export_file_path|
       completed_export_file_path = "completed-" + export_file_path
@@ -46,14 +49,26 @@ class Petasos::Location
     config["pools"]
   end
 
-  def update_imports_file
+  def update_manifest_file
     # a list of pools and their import paths from locations
-    pool_imports = Hash.new { |h, k| h[k] = [] }
+    pool_imports = Hash.new { |h, k| h[k] = {} }
+    pool_exports = Hash.new { |h, k| h[k] = {} }
     pools.each do |pool|
       pool_import_path = pool["import_path"]
-      pool_imports[pool["name"]] << File.join(pool["path"], pool_import_path) if pool_import_path
+      if pool_import_path
+        pool_imports[pool["name"]]["import_path"] = File.join(pool["path"], pool_import_path)
+        pool_imports[pool["name"]]["backfill"] = pool["backfill"] ? true : false
+      end
+      if pool["export"]
+        pool_exports[pool["name"]]["path"] = pool["path"]
+        pool_exports[pool["name"]]["canonical"] = pool["canonical"] ? true : false
+      end
     end
-    write_yaml("imports_#{config["name"]}.yaml", pool_imports)
+    manifest_hash = {
+      "imports" => pool_imports,
+      "exports" => pool_exports,
+    }
+    write_yaml("manifest_#{config["name"]}.yaml", pool_imports)
   end
 
   def included_matchers(pool)

@@ -3,6 +3,7 @@
   pools:
   - name: wow-ah
     export: true
+    canonical: true
     path: /home/justin/play/petasos/test/sandbox/node_a/location_a
     included_matchers:
     - "data/**/*.*"
