@@ -130,6 +130,8 @@ class Petasos::Distributor
           end
         end
       end
+      # clear the seen files locally.
+      `rm seen_*`
     end
   end
 
