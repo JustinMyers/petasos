@@ -15,10 +15,11 @@ cp basic_petasos_distribution-config.yaml petasos_distribution-config.yaml
 ruby -I../../../lib ../../../bin/petasos
 
 # Now create the backfill target and rerun
+echo "Running in node_c"
 cd ../node_c
 ruby -I../../../lib ../../../bin/petasos
 echo "Running in distributor"
 cd ../distributor
 echo "Copying backfill config into place."
-cp basic_petasos_distribution-config.yaml petasos_distribution-config.yaml
+cp backfill_petasos_distribution-config.yaml petasos_distribution-config.yaml
 ruby -I../../../lib ../../../bin/petasos
