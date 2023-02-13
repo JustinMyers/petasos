@@ -11,3 +11,7 @@ rm node_b/manifest_*
 rm node_b/exports_*
 rm node_b/seen_*
 rm node_b/location_a/data/*
+rm node_c/manifest_*
+rm node_c/exports_*
+rm node_c/seen_*
+rm node_c/location_a/data/*
