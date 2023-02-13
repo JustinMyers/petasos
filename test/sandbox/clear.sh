@@ -1,6 +1,7 @@
 rm distributor/manifest_*
 rm distributor/exports_*
 rm distributor/completed-*
+rm distributor/seen_*
 rm -rf distributor/petasos-node-*
 rm node_a/manifest_*
 rm node_a/exports_*

@@ -27,6 +27,10 @@ class Petasos::Node
     `rsync --ignore-missing-args --ignore-existing #{config["host"]}:#{config["path"]}/exports* #{config["name"]}/`
   end
 
+  def grab_seen_file_for_location(location_name, pool_name)
+    `scp #{config["host"]}:#{config["path"]}/seen_#{location_name}_#{pool_name}.yaml .`
+  end
+
   def parse_manifests
     FileList.new("#{config["name"]}/manifest_*").each do |manifest_file_path|
       @manifests << YAML.load_file(manifest_file_path)
