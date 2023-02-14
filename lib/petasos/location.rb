@@ -36,9 +36,9 @@ class Petasos::Location
       end
 
       # this is where the "after_seen" hooks would run
-      if File.file("petasos_after-seen.rb")
+      if File.file?("petasos_after-seen.rb")
         # this should define a method called "after_seen_hook"
-        require "petasos_after-seen"
+        require "./petasos_after-seen"
         if defined?(:after_seen_hook)
           new_files.each do |file|
             after_seen_hook(file)
