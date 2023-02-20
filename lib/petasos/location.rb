@@ -35,13 +35,37 @@ class Petasos::Location
         create_file_export_list(pool, new_files.to_a) if new_files.length > 0
       end
 
-      # this is where the "after_seen" hooks would run
+      # "after_seen" hooks
       if File.file?("petasos_after-seen.rb")
-        # this should define a method called "after_seen_hook"
         require "./petasos_after-seen"
-        if defined?(:after_seen_hook)
+        # after seen for all files
+        if defined?(after_seen_all)
           new_files.each do |file|
-            after_seen_hook(file)
+            after_seen_all(file)
+          end
+        end
+
+        # after seen for every file in this location
+        location_hook = "after_seen_#{config["name"]}"
+        if eval("defined?(#{location_hook})")
+          new_files.each do |file|
+            eval("#{location_hook}(#{file})")
+          end
+        end
+
+        # after seen for every file in this pool
+        pool_hook = "after_seen_#{pool["name"]}"
+        if eval("defined?(#{pool_hook})")
+          new_files.each do |file|
+            eval("#{pool_hook}(#{file})")
+          end
+        end
+
+        # after seen for every file in this pool in this location
+        location_and_pool_hook = "after_seen_#{config["name"]}_#{pool["name"]}"
+        if eval("defined?(#{location_and_pool_hook})")
+          new_files.each do |file|
+            eval("#{location_and_pool_hook}(#{file})")
           end
         end
       end
