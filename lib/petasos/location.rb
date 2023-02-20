@@ -46,26 +46,26 @@ class Petasos::Location
         end
 
         # after seen for every file in this location
-        location_hook = "after_seen_#{config["name"]}"
+        location_hook = "after_seen_#{methodize(config["name"])}"
         if eval("defined?(#{location_hook})")
           new_files.each do |file|
-            eval("#{location_hook}(#{file})")
+            eval("#{location_hook}(\"#{file}\")")
           end
         end
 
         # after seen for every file in this pool
-        pool_hook = "after_seen_#{pool["name"]}"
+        pool_hook = "after_seen_#{methodize(pool["name"])}"
         if eval("defined?(#{pool_hook})")
           new_files.each do |file|
-            eval("#{pool_hook}(#{file})")
+            eval("#{pool_hook}(\"#{file}\")")
           end
         end
 
         # after seen for every file in this pool in this location
-        location_and_pool_hook = "after_seen_#{config["name"]}_#{pool["name"]}"
+        location_and_pool_hook = "after_seen_#{methodize(config["name"])}_#{methodize(pool["name"])}"
         if eval("defined?(#{location_and_pool_hook})")
           new_files.each do |file|
-            eval("#{location_and_pool_hook}(#{file})")
+            eval("#{location_and_pool_hook}(\"#{file}\")")
           end
         end
       end
@@ -146,5 +146,9 @@ class Petasos::Location
     File.open(yaml_path, "w") do |out|
       YAML.dump(content, out)
     end
+  end
+
+  def methodize(phrase)
+    phrase.gsub("-", "_")
   end
 end
