@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "petasos"
-  spec.version = "0.3.1"
+  spec.version = "0.3.2"
   spec.summary = "Petasos identifies new files and distributes them to where they belong"
   spec.description = "Petasos identifies new files and distributes them to where they belong"
   spec.authors = ["Justin Myers"]
@@ -11,7 +11,6 @@ Gem::Specification.new do |spec|
   spec.license = "MIT"
   spec.files = ["lib/petasos.rb", "lib/petasos/location.rb", "lib/petasos/node.rb", "lib/petasos/distributor.rb", "bin/petasos"]
   spec.executables = "petasos"
-  spec.default_executable = "petasos"
   spec.date = "2023-02-14"
   spec.require_paths = ["lib"]
 end

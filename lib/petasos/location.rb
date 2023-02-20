@@ -21,10 +21,11 @@ class Petasos::Location
           completed_files = YAML.load_file(completed_export_file_path)
 
           process_lifecycle_hooks("after_export", pool, completed_files)
+
+          `mkdir -p logs`
+          `mv #{export_file_path} logs/`
+          `mv #{completed_export_file_path} logs/`
         end
-        `mkdir -p logs`
-        `mv #{export_file_path} logs/`
-        `mv #{completed_export_file_path} logs/`
       end
 
       # get all filenames in this location that belong to this pool
@@ -122,7 +123,11 @@ class Petasos::Location
   end
 
   def read_seen_pool_files(pool)
-    YAML.load_file(File.join(Dir.pwd, "seen_#{config["name"]}_#{pool["name"]}.yaml"))
+    unless config["disable_seen"] or pool["disable_seen"]
+      YAML.load_file(File.join(Dir.pwd, "seen_#{config["name"]}_#{pool["name"]}.yaml"))
+    else
+      []
+    end
   end
 
   def update_seen_pool_files(pool, file_paths)
