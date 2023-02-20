@@ -38,40 +38,36 @@ class Petasos::Location
       # "after_seen" hooks
       if File.file?("petasos_after-seen.rb")
         require "./petasos_after-seen"
-        # after seen for all files
-        if defined?(after_seen_all)
-          new_files.each do |file|
-            after_seen_all(file)
-          end
-        end
-
-        # after seen for every file in this location
-        location_hook = "after_seen_#{methodize(config["name"])}"
-        if eval("defined?(#{location_hook})")
-          new_files.each do |file|
-            eval("#{location_hook}(\"#{file}\")")
-          end
-        end
-
-        # after seen for every file in this pool
-        pool_hook = "after_seen_#{methodize(pool["name"])}"
-        if eval("defined?(#{pool_hook})")
-          new_files.each do |file|
-            eval("#{pool_hook}(\"#{file}\")")
-          end
-        end
 
         # after seen for every file in this pool in this location
         location_and_pool_hook = "after_seen_#{methodize(config["name"])}_#{methodize(pool["name"])}"
-        if eval("defined?(#{location_and_pool_hook})")
-          new_files.each do |file|
-            eval("#{location_and_pool_hook}(\"#{file}\")")
-          end
-        end
+        check_if_defined_and_eval(location_and_pool_hook, new_files)
+
+        # after seen for every file in this pool
+        pool_hook = "after_seen_#{methodize(pool["name"])}"
+        check_if_defined_and_eval(pool_hook, new_files)
+
+        # after seen for every file in this location
+        location_hook = "after_seen_#{methodize(config["name"])}"
+        check_if_defined_and_eval(location_hook, new_files)
+
+        # after seen for all files
+        check_if_defined_and_eval("after_seen_all", new_files)
       end
 
       # update list of seen files
-      update_seen_pool_files(pool, seen_pool_files + new_files)
+      # unless the location opts out
+      unless config["disable_seen"]
+        update_seen_pool_files(pool, seen_pool_files + new_files)
+      end
+    end
+  end
+
+  def check_if_defined_and_eval(lifecycle_hook, files)
+    if eval("defined?(#{lifecycle_hook})")
+      files.each do |file|
+        eval("#{lifecycle_hook}(\"#{file}\")")
+      end
     end
   end
 
