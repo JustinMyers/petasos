@@ -46,7 +46,8 @@ class Petasos::Location
 
       # update list of seen files
       # unless the location opts out
-      unless config["disable_seen"]
+      # or the pool opts out
+      unless config["disable_seen"] or pool["disable_seen"]
         update_seen_pool_files(pool, seen_pool_files + new_files)
       end
     end
@@ -131,8 +132,10 @@ class Petasos::Location
 
   def initialize_all_seen_pool_files
     pools.each do |pool|
-      yaml_path = "seen_#{config["name"]}_#{pool["name"]}.yaml"
-      write_yaml(yaml_path, []) unless File.file?(yaml_path)
+      unless config["disable_seen"] or pool["disable_seen"]
+        yaml_path = "seen_#{config["name"]}_#{pool["name"]}.yaml"
+        write_yaml(yaml_path, []) unless File.file?(yaml_path)
+      end
     end
   end
 
