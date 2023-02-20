@@ -42,12 +42,7 @@ class Petasos::Location
         create_file_export_list(pool, new_files.to_a) if new_files.length > 0
       end
 
-      # "after_seen" hooks
-      if File.file?("petasos_after-seen.rb")
-        require "./petasos_after-seen"
-
-        process_lifecycle_hooks("after_seen", pool, new_files)
-      end
+      process_lifecycle_hooks("after_seen", pool, new_files)
 
       # update list of seen files
       # unless the location opts out
@@ -58,6 +53,10 @@ class Petasos::Location
   end
 
   def process_lifecycle_hooks(hook_prefix, pool, files)
+    if File.file?("petasos_after-hooks.rb")
+      require "./petasos_after-hooks"
+    end
+
     # after seen for every file in this pool in this location
     location_and_pool_hook = "#{hook_prefix}_#{methodize(config["name"])}_#{methodize(pool["name"])}"
     check_if_defined_and_eval(location_and_pool_hook, files)
