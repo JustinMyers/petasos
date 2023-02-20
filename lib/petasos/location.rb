@@ -13,13 +13,20 @@ class Petasos::Location
   end
 
   def run
-    # delete exports file if completed file exists
-    FileList.new(File.join(Dir.pwd, "exports_#{@config["name"]}*.yaml")).each do |export_file_path|
-      completed_export_file_path = "completed-" + export_file_path
-      `rm #{export_file_path}` if File.file?(completed_export_file_path)
-    end
-
     pools.each do |pool|
+      # delete exports file if completed file exists
+      FileList.new(File.join(Dir.pwd, "exports_#{@config["name"]}_#{pool["name"]}_*.yaml")).each do |export_file_path|
+        completed_export_file_path = File.join(File.dirname(export_file_path), "completed-" + File.basename(export_file_path))
+        if File.file?(completed_export_file_path)
+          completed_files = YAML.load_file(completed_export_file_path)
+
+          process_lifecycle_hooks("after_export", pool, completed_files)
+        end
+        `mkdir -p logs`
+        `mv #{export_file_path} logs/`
+        `mv #{completed_export_file_path} logs/`
+      end
+
       # get all filenames in this location that belong to this pool
       current_files = current_pool_files(pool)
 
@@ -39,20 +46,7 @@ class Petasos::Location
       if File.file?("petasos_after-seen.rb")
         require "./petasos_after-seen"
 
-        # after seen for every file in this pool in this location
-        location_and_pool_hook = "after_seen_#{methodize(config["name"])}_#{methodize(pool["name"])}"
-        check_if_defined_and_eval(location_and_pool_hook, new_files)
-
-        # after seen for every file in this pool
-        pool_hook = "after_seen_#{methodize(pool["name"])}"
-        check_if_defined_and_eval(pool_hook, new_files)
-
-        # after seen for every file in this location
-        location_hook = "after_seen_#{methodize(config["name"])}"
-        check_if_defined_and_eval(location_hook, new_files)
-
-        # after seen for all files
-        check_if_defined_and_eval("after_seen_all", new_files)
+        process_lifecycle_hooks("after_seen", pool, new_files)
       end
 
       # update list of seen files
@@ -61,6 +55,23 @@ class Petasos::Location
         update_seen_pool_files(pool, seen_pool_files + new_files)
       end
     end
+  end
+
+  def process_lifecycle_hooks(hook_prefix, pool, files)
+    # after seen for every file in this pool in this location
+    location_and_pool_hook = "#{hook_prefix}_#{methodize(config["name"])}_#{methodize(pool["name"])}"
+    check_if_defined_and_eval(location_and_pool_hook, files)
+
+    # after seen for every file in this pool
+    pool_hook = "#{hook_prefix}_#{methodize(pool["name"])}"
+    check_if_defined_and_eval(pool_hook, files)
+
+    # after seen for every file in this location
+    location_hook = "#{hook_prefix}_#{methodize(config["name"])}"
+    check_if_defined_and_eval(location_hook, files)
+
+    # after seen for all files
+    check_if_defined_and_eval("#{hook_prefix}_all", files)
   end
 
   def check_if_defined_and_eval(lifecycle_hook, files)
