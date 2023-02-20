@@ -7,6 +7,7 @@ rm node_a/manifest_*
 rm node_a/exports_*
 rm node_a/completed-*
 rm node_a/seen_*
+rm -rf node_a/logs
 rm node_b/manifest_*
 rm node_b/exports_*
 rm node_b/seen_*
