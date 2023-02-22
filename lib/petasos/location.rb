@@ -97,7 +97,7 @@ class Petasos::Location
         pool_imports[pool["name"]]["import_path"] = File.join(pool["path"], pool_import_path)
         pool_imports[pool["name"]]["backfill"] = pool["backfill"] ? true : false
       end
-      if pool["export"]
+      if pool["export"] || pool["canonical"]
         pool_exports[pool["name"]]["path"] = pool["path"]
         pool_exports[pool["name"]]["canonical"] = pool["canonical"] ? true : false
       end

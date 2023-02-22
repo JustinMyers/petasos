@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [0.4.1] - 2023-02-20
+## [0.4.3] - 2023-02-20
+
+Canonical non-exporting pools now update the manifest.
+
+## [0.4.2] - 2023-02-20
 
 Logging messages and replace rsync with scp.
 

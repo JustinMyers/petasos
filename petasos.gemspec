@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "petasos"
-  spec.version = "0.4.2"
+  spec.version = "0.4.3"
   spec.summary = "Petasos identifies new files and distributes them to where they belong"
   spec.description = "Petasos identifies new files and distributes them to where they belong"
   spec.authors = ["Justin Myers"]
