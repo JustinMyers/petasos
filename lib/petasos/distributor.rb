@@ -17,6 +17,11 @@ class Petasos::Distributor
       @nodes[node["name"]] = Petasos::Node.new(node)
     end
 
+    @nodes.values.each do |node|
+      puts "Running `petasos locations` on #{node.name} before distribution begins"
+      `ssh #{node.host} \"cd #{node.path} && petasos locations\"`
+    end
+
     @manifests = {}
     @nodes.each_pair do |node_name, node|
       @manifests[node_name] = node.manifests
@@ -50,7 +55,7 @@ class Petasos::Distributor
     @manifests.each_pair do |node_name, manifest_list|
       manifest_list.each do |manifest|
         manifest["imports"].each_pair do |pool_name, import_hash|
-          @pools[pool_name]["import_paths"] << [node_name, import_hash["import_path"]]
+          @pools[pool_name]["import_paths"] << [node_name, manifest["name"], import_hash["import_path"]]
           @pools[pool_name]["backfill_import_paths"] << [node_name, manifest["name"], import_hash["import_path"]] if import_hash["backfill"]
         end
         manifest["exports"].each_pair do |pool_name, export_hash|
@@ -62,6 +67,7 @@ class Petasos::Distributor
     # {"wow-ah"=>
     #     {"import_paths"=>
     #       [["petasos-node-b",
+    #         "linux-laptop-storage",
     #         "/home/justin/play/petasos/test/sandbox/node_b/location_a/data"]],
     #      "backfill_import_paths"=>
     #       [["petasos-node-b",
@@ -77,11 +83,17 @@ class Petasos::Distributor
       export_filename = File.basename(exports_file_path, ".*")
       label, location_name, pool_name, datetime = export_filename.split("_")
       export_paths = YAML.load_file(exports_file_path)
-      export_paths.each do |export_path|
-        @pools[pool_name]["import_paths"].each do |pool_storage|
-          to_node = find_node(pool_storage.first)
-          `scp #{from_node.host}:#{export_path}* #{to_node.host}:#{pool_storage.last}`
+      @pools[pool_name]["import_paths"].each do |pool_storage|
+        to_node = find_node(pool_storage.first)
+        destination_seen_file_hash = get_seen_file_hash(pool_storage.first, pool_storage[1], pool_name)
+        export_paths.each do |export_path|
+          unless destination_seen_file_hash[File.basename(export_path)]
+            puts "moving #{File.basename(export_path)} from #{from_node.name} to #{to_node.name}"
+            `scp #{from_node.host}:#{export_path}* #{to_node.host}:#{pool_storage.last}`
+          end
         end
+        puts "Running `petasos locations` on #{to_node.name} after export from #{from_node.name}"
+        `ssh #{to_node.host} \"cd #{to_node.path} && petasos locations\"`
       end
       # mark it as completed
       completed_export_file_path = File.join(Dir.pwd, "completed-#{File.basename(exports_file_path)}")
@@ -102,39 +114,43 @@ class Petasos::Distributor
     #      "canonical_exporters"=>[["petasos-node-a", "linux-laptop-source"]]}}
 
     # Process the backfills.
-    # grab the seen files on the canonical exporters
     @pools.each_pair do |pool_name, manifest_hash|
-      manifest_hash["canonical_exporters"].each do |canonical_exporter_details|
-        find_node(canonical_exporter_details.first).grab_seen_file_for_location(canonical_exporter_details.last, pool_name)
-      end
-
-      # grab the seen files on the backfill importers
-      manifest_hash["backfill_import_paths"].each do |backfill_importer_details|
-        find_node(backfill_importer_details.first).grab_seen_file_for_location(backfill_importer_details[1], pool_name)
-      end
-
       # for each canonical exporter loop through the backfill lists, identify files that need moving and move them
       manifest_hash["canonical_exporters"].each do |canonical_exporter_details|
-        exporter_seen_files = {}
-        exporter_file_list = YAML.load_file("seen_#{canonical_exporter_details.last}_#{pool_name}.yaml")
-        exporter_file_list.each { |f| exporter_seen_files[File.basename(f)] = f }
+        exporter_seen_files = get_seen_file_hash(canonical_exporter_details.first, canonical_exporter_details.last, pool_name)
         manifest_hash["backfill_import_paths"].each do |backfill_importer_details|
-          backfill_importer_files = {}
-          backfill_file_list = YAML.load_file("seen_#{backfill_importer_details[1]}_#{pool_name}.yaml")
-          backfill_file_list.each { |f| backfill_importer_files[File.basename(f)] = f }
+          backfill_importer_files = get_seen_file_hash(backfill_importer_details.first, backfill_importer_details[1], pool_name)
+
+          from_node = find_node(canonical_exporter_details.first)
+          to_node = find_node(backfill_importer_details.first)
 
           exporter_seen_files.each_pair do |file_name, file_path|
             unless backfill_importer_files[file_name]
-              from_node = find_node(canonical_exporter_details.first)
-              to_node = find_node(backfill_importer_details.first)
+              puts "Backfilling #{file_name} to #{to_node.name} from #{from_node.name}"
               `scp #{from_node.host}:#{file_path} #{to_node.host}:#{backfill_importer_details.last}`
             end
           end
+
+          puts "Running `petasos locations` on #{to_node.name} after backfill from #{from_node.name}"
+          `ssh #{to_node.host} \"cd #{to_node.path} && petasos locations\"`
         end
       end
-      # clear the seen files locally.
-      `rm seen_*`
     end
+    # clear the seen files locally.
+    `rm seen_*`
+  end
+
+  def get_seen_file_hash(node_name, location_name, pool_name)
+    find_node(node_name).grab_seen_file_for_location(location_name, pool_name)
+    seen_file_hash = {}
+    # some locations/pools do not generate a seen file.
+    if File.file?("seen_#{location_name}_#{pool_name}.yaml")
+      seen_file_list = YAML.load_file("seen_#{location_name}_#{pool_name}.yaml")
+    else
+      seen_file_list = []
+    end
+    seen_file_list.each { |f| seen_file_hash[File.basename(f)] = f }
+    seen_file_hash
   end
 
   def find_node(node_name)

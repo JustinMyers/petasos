@@ -1,10 +1,17 @@
 ## [Unreleased]
 
-## [0.4.3] - 2023-02-20
+## [0.5.0] - 2023-02-22
+
+- Do not export files to locations that have already seen them.
+- Run petasos locations on locations after exports and backfills.
+- Logging after taking these actions.
+- petasos command now accepts locations argument to ignore distribution.
+
+## [0.4.3] - 2023-02-21
 
 Canonical non-exporting pools now update the manifest.
 
-## [0.4.2] - 2023-02-20
+## [0.4.2] - 2023-02-21
 
 Logging messages and replace rsync with scp.
 

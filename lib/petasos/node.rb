@@ -14,12 +14,16 @@ class Petasos::Node
     parse_manifests
   end
 
+  def name
+    config["name"]
+  end
+
   def host
-    @config["host"]
+    config["host"]
   end
 
   def path
-    @config["path"]
+    config["path"]
   end
 
   def grab_manifest_and_exports

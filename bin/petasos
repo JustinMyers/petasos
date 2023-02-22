@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'petasos'
+require "petasos"
 
-Petasos.new.run
+Petasos.new.run(ARGV[0])

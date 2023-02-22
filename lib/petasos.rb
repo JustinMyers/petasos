@@ -6,9 +6,11 @@ require "yaml"
 class Petasos
   class Error < StandardError; end
 
-  def run
+  def run(mode = "")
     process_locations
-    process_distribution if File.file?(File.join(Dir.pwd, "petasos_distribution-config.yaml"))
+    unless mode == "locations"
+      process_distribution if File.file?(File.join(Dir.pwd, "petasos_distribution-config.yaml"))
+    end
   end
 
   def process_locations
