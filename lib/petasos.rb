@@ -12,6 +12,7 @@ class Petasos
   end
 
   def process_locations
+    puts "petasos: processing locations"
     # look for petasos_location-*.yaml files
     # and pass each one to a petasos location manager
     FileList.new("petasos_location-*.yaml").each do |location_file|
@@ -22,6 +23,7 @@ class Petasos
   end
 
   def process_distribution
+    puts "petasos: processing distribution"
     # look for petasos_distribution-*.yaml files
     # and pass each one to a petasos distribution
     FileList.new("petasos_distribution-*.yaml").each do |distribution_file|

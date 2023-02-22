@@ -46,6 +46,7 @@ class Petasos::Distributor
       }
     }
 
+    puts "petasos: compiling manifests"
     @manifests.each_pair do |node_name, manifest_list|
       manifest_list.each do |manifest|
         manifest["imports"].each_pair do |pool_name, import_hash|
@@ -69,6 +70,7 @@ class Petasos::Distributor
     #      "canonical_exporters"=>[["petasos-node-a", "linux-laptop-source"]]}}
 
     # Process the exports files and return them as completed.
+    puts "petasos: processing exports"
     FileList.new(File.join(Dir.pwd, "**/exports_*")).each do |exports_file_path|
       from_node_name = File.basename(File.dirname(exports_file_path))
       from_node = find_node(from_node_name)

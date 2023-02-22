@@ -23,9 +23,11 @@ class Petasos::Node
   end
 
   def grab_manifest_and_exports
-    `rsync #{config["host"]}:#{config["path"]}/manifest* #{config["name"]}/`
-    rsync_path = "--rsync-path=#{config["rsync_path"]}"
-    `rsync --ignore-missing-args #{rsync_path} --ignore-existing #{config["host"]}:#{config["path"]}/exports* #{config["name"]}/`
+    `scp #{config["host"]}:#{config["path"]}/manifest* #{config["name"]}/`
+    `scp #{config["host"]}:#{config["path"]}/exports* #{config["name"]}/`
+    # `rsync #{config["host"]}:#{config["path"]}/manifest* #{config["name"]}/`
+    # rsync_path = "--rsync-path=#{config["rsync_path"]}"
+    # `rsync --ignore-missing-args #{rsync_path} --ignore-existing #{config["host"]}:#{config["path"]}/exports* #{config["name"]}/`
   end
 
   def grab_seen_file_for_location(location_name, pool_name)
