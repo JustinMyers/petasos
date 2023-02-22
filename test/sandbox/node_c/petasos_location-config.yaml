@@ -1,6 +1,5 @@
 ---
 - name: linux-laptop-storage
-  disable_seen: true
   pools:
   - name: wow-ah
     path: /home/justin/play/petasos/test/sandbox/node_c/location_a

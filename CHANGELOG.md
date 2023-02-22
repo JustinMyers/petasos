@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+## [0.5.1] - 2023-02-22
+
+- double run protection with petasos_is_running file
+- run petasos locations on node initialization
+- run petasos locations after completing exports
+- run petasos locations before distribution begins
+- test runners simplified
+
 ## [0.5.0] - 2023-02-22
 
 - Do not export files to locations that have already seen them.

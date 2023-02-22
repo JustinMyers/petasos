@@ -17,11 +17,6 @@ class Petasos::Distributor
       @nodes[node["name"]] = Petasos::Node.new(node)
     end
 
-    @nodes.values.each do |node|
-      puts "Running `petasos locations` on #{node.name} before distribution begins"
-      `ssh #{node.host} \"cd #{node.path} && petasos locations\"`
-    end
-
     @manifests = {}
     @nodes.each_pair do |node_name, node|
       @manifests[node_name] = node.manifests
@@ -88,7 +83,7 @@ class Petasos::Distributor
         destination_seen_file_hash = get_seen_file_hash(pool_storage.first, pool_storage[1], pool_name)
         export_paths.each do |export_path|
           unless destination_seen_file_hash[File.basename(export_path)]
-            puts "moving #{File.basename(export_path)} from #{from_node.name} to #{to_node.name}"
+            puts "exporting #{File.basename(export_path)} from #{from_node.name} to #{to_node.name}"
             `scp #{from_node.host}:#{export_path}* #{to_node.host}:#{pool_storage.last}`
           end
         end
@@ -101,6 +96,8 @@ class Petasos::Distributor
       # and then put it back where it came from
       `scp #{completed_export_file_path} #{from_node.host}:#{from_node.path}`
       `rm #{completed_export_file_path}`
+      puts "Running `petasos locations` on #{from_node.name} after completing its exports"
+      `ssh #{from_node.host} \"cd #{from_node.path} && petasos locations\"`
     end
 
     # {"wow-ah"=>

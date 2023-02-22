@@ -7,9 +7,14 @@ class Petasos
   class Error < StandardError; end
 
   def run(mode = "")
-    process_locations
-    unless mode == "locations"
-      process_distribution if File.file?(File.join(Dir.pwd, "petasos_distribution-config.yaml"))
+    unless File.file?("petasos_is_running")
+      `touch petasos_is_running`
+      process_locations
+      unless mode == "locations"
+        process_distribution if File.file?(File.join(Dir.pwd, "petasos_distribution-config.yaml"))
+        process_locations
+      end
+      `rm petasos_is_running`
     end
   end
 

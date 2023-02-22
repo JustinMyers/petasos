@@ -10,6 +10,10 @@ class Petasos::Node
     @config = config
     @manifests = []
     `mkdir -p #{config["name"]}`
+
+    puts "Running `petasos locations` on #{name} before distribution begins"
+    `ssh #{host} \"cd #{path} && petasos locations\"`
+
     grab_manifest_and_exports
     parse_manifests
   end
