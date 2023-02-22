@@ -2,6 +2,10 @@
 
 ## [0.4.1] - 2023-02-20
 
+Logging messages and replace rsync with scp.
+
+## [0.4.1] - 2023-02-20
+
 Bugfix.
 
 ## [0.4.0] - 2023-02-20
