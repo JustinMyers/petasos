@@ -144,12 +144,12 @@ class Petasos::Location
     end
   end
 
-  def clear_all_seen_pool_files
-    pools.each do |pool|
-      yaml_path = File.join(path, "seen_#{pool["name"]}.yaml")
-      write_yaml(yaml_path, [])
-    end
-  end
+  # def clear_all_seen_pool_files
+  #   pools.each do |pool|
+  #     yaml_path = File.join(path, "seen_#{pool["name"]}.yaml")
+  #     write_yaml(yaml_path, [])
+  #   end
+  # end
 
   def create_file_export_list(pool, file_paths)
     yaml_path = File.join(Dir.pwd, "exports_#{@config["name"]}_#{pool["name"]}_#{Time.now.strftime("%Y-%m-%d-%H:%M:%S")}.yaml")
