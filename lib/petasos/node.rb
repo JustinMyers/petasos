@@ -39,7 +39,7 @@ class Petasos::Node
   end
 
   def grab_seen_file_for_location(location_name, pool_name)
-    `scp #{config["host"]}:#{config["path"]}/seen_#{location_name}_#{pool_name}.yaml .`
+    `scp #{config["host"]}:#{config["path"]}/seen_#{location_name}_#{pool_name}.yaml petasos_distributor_workspace/`
   end
 
   def parse_manifests

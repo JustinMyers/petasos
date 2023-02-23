@@ -112,6 +112,7 @@ class Petasos::Distributor
 
     # Process the backfills.
     @pools.each_pair do |pool_name, manifest_hash|
+      `mkdir -p petasos_distributor_workspace`
       # for each canonical exporter loop through the backfill lists, identify files that need moving and move them
       manifest_hash["canonical_exporters"].each do |canonical_exporter_details|
         exporter_seen_files = get_seen_file_hash(canonical_exporter_details.first, canonical_exporter_details.last, pool_name)
@@ -134,15 +135,15 @@ class Petasos::Distributor
       end
     end
     # clear the seen files locally.
-    `rm seen_*`
+    `rm petasos_distributor_workspace/*`
   end
 
   def get_seen_file_hash(node_name, location_name, pool_name)
     find_node(node_name).grab_seen_file_for_location(location_name, pool_name)
     seen_file_hash = {}
     # some locations/pools do not generate a seen file.
-    if File.file?("seen_#{location_name}_#{pool_name}.yaml")
-      seen_file_list = YAML.load_file("seen_#{location_name}_#{pool_name}.yaml")
+    if File.file?("petasos_distributor_workspace/seen_#{location_name}_#{pool_name}.yaml")
+      seen_file_list = YAML.load_file("petasos_distributor_workspace/seen_#{location_name}_#{pool_name}.yaml")
     else
       seen_file_list = []
     end
