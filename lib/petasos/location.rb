@@ -132,6 +132,7 @@ class Petasos::Location
 
   def update_seen_pool_files(pool, file_paths)
     yaml_path = File.join(Dir.pwd, "seen_#{config["name"]}_#{pool["name"]}.yaml")
+    puts "UPDATE SEEN: #{yaml_path} w/ #{file_paths.count}"
     write_yaml(yaml_path, file_paths)
   end
 

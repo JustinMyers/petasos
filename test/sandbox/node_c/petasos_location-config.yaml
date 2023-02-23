@@ -1,5 +1,5 @@
 ---
-- name: linux-laptop-storage
+- name: linux-laptop-backup
   pools:
   - name: wow-ah
     path: /home/justin/play/petasos/test/sandbox/node_c/location_a

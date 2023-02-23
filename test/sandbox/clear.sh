@@ -17,6 +17,10 @@ rm node_c/exports_*
 rm node_c/seen_*
 rm node_c/location_a/data/*
 
-rm -rf node_a/petasis-node-*
+rm -rf node_a/petasos-node-*
 rm node_a/petasos_is_running
 rm node_a/petasos_distribution-config.yaml
+
+rm -rf node_c/petasos-node-*
+rm node_c/petasos_is_running
+rm node_c/petasos_distribution-config.yaml
