@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.5.2] - 2023-02-22
+
+Bugfix: do not delete seen files on the distributor. Instead, make a workspace directory and put working seen_ files in there.
+
 ## [0.5.1] - 2023-02-22
 
 - double run protection with petasos_is_running file
