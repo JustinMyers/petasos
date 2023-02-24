@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [0.5.3] - 2023-02-22
+## [0.5.4] - 2023-02-24
+
+Use login shell on remote to have access to petasos command.
+
+## [0.5.3] - 2023-02-24
 
 Changed how locking works for locations and distribution. Should be possible for distributors to location themselves.
 

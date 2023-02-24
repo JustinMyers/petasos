@@ -88,7 +88,7 @@ class Petasos::Distributor
           end
         end
         puts "Running `petasos locations` on #{to_node.name} after export from #{from_node.name}"
-        `ssh #{to_node.host} \"cd #{to_node.path} && petasos locations\"`
+        `ssh #{to_node.host} \'cd #{to_node.path} && bash -lc \"petasos locations\"\'`
       end
       # mark it as completed
       completed_export_file_path = File.join(Dir.pwd, "completed-#{File.basename(exports_file_path)}")
@@ -97,7 +97,7 @@ class Petasos::Distributor
       `scp #{completed_export_file_path} #{from_node.host}:#{from_node.path}`
       `rm #{completed_export_file_path}`
       puts "Running `petasos locations` on #{from_node.name} after completing its exports"
-      `ssh #{from_node.host} \"cd #{from_node.path} && petasos locations\"`
+      `ssh #{from_node.host} \'cd #{from_node.path} && bash -lc \"petasos locations\"\'`
     end
 
     # {"wow-ah"=>
@@ -130,7 +130,7 @@ class Petasos::Distributor
           end
 
           puts "Running `petasos locations` on #{to_node.name} after backfill from #{from_node.name}"
-          `ssh #{to_node.host} \"cd #{to_node.path} && petasos locations\"`
+          `ssh #{to_node.host} \'cd #{to_node.path} && bash -lc \"petasos locations\"\'`
         end
       end
     end
