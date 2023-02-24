@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.5.3] - 2023-02-22
+
+Changed how locking works for locations and distribution. Should be possible for distributors to location themselves.
+
 ## [0.5.2] - 2023-02-22
 
 Bugfix: do not delete seen files on the distributor. Instead, make a workspace directory and put working seen_ files in there.
