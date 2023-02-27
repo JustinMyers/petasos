@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.5.5] - 2023-02-26
+
+Abstract ssh calls, able to pass in unique ssh commands to run locations on other machines.
+
 ## [0.5.4] - 2023-02-24
 
 Use login shell on remote to have access to petasos command.
