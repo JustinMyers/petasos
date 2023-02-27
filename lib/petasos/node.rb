@@ -30,7 +30,7 @@ class Petasos::Node
   end
 
   def petasos_locations_command
-    config["petasos_command"] || "\'cd #{path} && bash -lc \"petasos locations\"\'"
+    config["petasos_command"] || config["petasos_locations_command"] || "\'cd #{path} && bash -lc \"petasos locations\"\'"
   end
 
   def run_petasos_locations(context = "")
