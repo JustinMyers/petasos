@@ -11,8 +11,7 @@ class Petasos::Node
     @manifests = []
     `mkdir -p #{config["name"]}`
 
-    puts "Running `petasos locations` on #{name} before distribution begins"
-    `ssh #{host} \'cd #{path} && bash -lc \"petasos locations\"\'`
+    run_petasos_locations("before distribution begins")
 
     grab_manifest_and_exports
     parse_manifests
@@ -28,6 +27,15 @@ class Petasos::Node
 
   def path
     config["path"]
+  end
+
+  def petasos_locations_command
+    config["petasos_command"] || "\'cd #{path} && bash -lc \"petasos locations\"\'"
+  end
+
+  def run_petasos_locations(context = "")
+    puts "Running `petasos locations` on #{name} #{context}"
+    `ssh #{host} #{petasos_locations_command}`
   end
 
   def grab_manifest_and_exports

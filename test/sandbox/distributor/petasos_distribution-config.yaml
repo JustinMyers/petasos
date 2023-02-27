@@ -5,6 +5,3 @@
 - name: petasos-node-b
   host: justin@localhost
   path: "/home/justin/play/petasos/test/sandbox/node_b"
-- name: petasos-node-c
-  host: justin@localhost
-  path: "/home/justin/play/petasos/test/sandbox/node_c"
