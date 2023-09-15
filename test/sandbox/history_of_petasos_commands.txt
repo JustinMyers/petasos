@@ -1,0 +1,142 @@
+  453  mkdir petasos
+  454  cd petasos/
+  463  ruby petasos_node_manager.rb 
+  466  ruby petasos_node_manager.rb 
+  473  ruby petasos_node_manager.rb 
+  475  ruby petasos_node_manager.rb 
+  478  ruby petasos_node_manager.rb 
+  480  ruby petasos_node_manager.rb 
+  482  ruby petasos_node_manager.rb 
+  484  ruby petasos_node_manager.rb 
+  486  ruby petasos_node_manager.rb 
+  489  ruby petasos_node_manager.rb 
+  491  ruby petasos_node_manager.rb 
+  494  ruby petasos_node_manager.rb 
+  496  ruby petasos_node_manager.rb 
+  500  ruby petasos_node_manager.rb 
+  506  ruby petasos_node_manager.rb 
+  508  ruby petasos_node_manager.rb 
+  510  ruby petasos_node_manager.rb 
+  512  ruby petasos_node_manager.rb 
+  517  ruby petasos_node_manager.rb 
+  520  ruby petasos_node_manager.rb 
+  522  ruby petasos_node_manager.rb 
+  527  git commit -am "initial petasos commit"
+  528  ruby petasos_node_manager.rb 
+  529  rm petasos-node-1_pool-import-locations.yaml 
+  530  ruby petasos_node_manager.rb 
+  540  scp justin@localhost:~/play/petasos/test.txt justin@localhost:~/play/petasos/test_2.txt
+  542  scp justin@localhost:~/play/petasos/test.txt justin@localhost:~/play/petasos/test_2.txt
+  546  git mv petasos_location.rb location_a/
+  547  git mv petasos_node_manager.rb location_a/
+  549  rm exports_petasos-node-1_linux-laptop-1_wow-ah_2023-01-24-07\:31\:31.yaml 
+  550  rm imports_petasos-node-1.yaml 
+  554  git mv ../petasos_cluster_manager.rb .
+  563  ruby petasos_node_manager.rb 
+  567  ruby petasos_node_manager.rb 
+  568  rm exports_petasos-node-1_linux-laptop-1_wow-ah_2023-01-24-10\:0
+  569  rm exports_petasos-node-1_linux-laptop-1_wow-ah_2023-01-24-10\:0*
+  574  ls /home/justin/play/petasos/location_a/./data
+  575  ruby petasos_node_manager.rb 
+  576  rm exports_petasos-node-1_linux-laptop-1_wow-ah_2023-01-24-10\:05\:20.yaml 
+  593  git mv location_a/petasos_node_manager.rb .
+  594  git mv location_a/petasos_location.rb .
+  595  git rm location_a/imports_petasos-node-1.yaml 
+  600  ruby node_a/petasos_node_manager.rb 
+  602  ruby petasos_node_manager.rb 
+  604  ruby node_a/petasos_node_manager.rb 
+  605  rm imports_petasos-node-1.yaml 
+  606  rm exports_petasos-node-1_linux-laptop-1_wow-ah_2023-01-24-10\:14\:25.yaml 
+  607  ruby node_a/petasos_node_manager.rb 
+  608  rm node_a/exports_petasos-node-1_linux-laptop-1_wow-ah_2023-01-24-11\:50\:33.yaml 
+  609  rm node_a/imports_petasos-node-1.yaml 
+  615  ruby node_a/petasos_node_manager.rb 
+  616  ruby node_b/petasos_node_manager.rb 
+  619  ruby node_a/petasos_node_manager.rb 
+  620  ruby node_b/petasos_node_manager.rb 
+  621  ruby node_a/petasos_node_manager.rb 
+  626  ruby node_a/petasos_node_manager.rb 
+  627  ruby node_b/petasos_node_manager.rb 
+  628  ruby cluster/petasos_cluster_manager.rb 
+  630  ruby cluster/petasos_cluster_manager.rb 
+  633  ruby petasos_cluster_manager.rb 
+  635  ruby node_a/petasos_node_manager.rb && ruby node_b/petasos_node_manager.rb 
+  638  ruby node_a/petasos_node_manager.rb && ruby node_b/petasos_node_manager.rb 
+  645  ruby petasos/lol.rb 
+  646  cd petasos/
+  650  ruby petasos/lol.rb 
+  651  ruby node_a/petasos_node_manager.rb && ruby node_b/petasos_node_manager.rb && 
+  652  cd petasos/
+  653  ruby node_a/petasos_node_manager.rb && ruby node_b/petasos_node_manager.rb 
+  664  ruby node_a/petasos_node_manager.rb && ruby node_b/petasos_node_manager.rb 
+  691  ruby petasos_cluster_manager.rb 
+  742  diff node_a/petasos_location.rb 
+  743  diff node_a/petasos_location.rb node_b/petasos_location.rb 
+  748  git remote add origin https://github.com/JustinMyers/petasos.git
+  785  cd petasos/
+  803  cd play/petasos/
+  805  cd play/petasos/
+  810  gem install petasos
+  811  petasos
+  812  which petasos
+  822  rm test/sandbox/node_a/petasos_location.rb 
+  823  rm test/sandbox/node_a/petasos_node_manager.rb 
+  824  rm test/sandbox/node_b/petasos_location.rb 
+  825  rm test/sandbox/node_b/petasos_node_manager.rb 
+  827  mv test/sandbox/node_b/location_config.yaml test/sandbox/node_b/petasos_location-config.yaml
+  886  mv node_a/petasos_distribution-config.yaml .
+  896  rm -rf petasos-node-a/
+  897  rm -rf petasos-node-b/
+  900  mv petasos_distribution-config.yaml distributor/
+  909  mkdir distributor/petasos-node-b
+  914  mkdir petasos-node-a
+ 1012  ls -al /home/justin/play/petasos/test/sandbox/node_b/location_a/data/
+ 1045  cp distributor/petasos_distribution-config.yaml distributor/basic_petasos_distribution-config.yaml
+ 1046  cp distributor/petasos_distribution-config.yaml distributor/backfill_petasos_distribution-config.yaml
+ 1084  gem push petasos-0.1.0.gem
+ 1085  gem build petasos.gemspec
+ 1086  gem push petasos-0.1.0.gem
+ 1096  touch petasos_after-seen.rb
+ 1119  cd play/petasos/
+ 1152  ls petasos/
+ 1155  cd petasos/
+ 1159  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && bash -lc \"petasos locations\"'
+ 1160  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && bash -lc "petasos locations"'
+ 1161  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && zsh -lc "petasos locations"'
+ 1162  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && zsh --login "petasos locations"'
+ 1163  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && zsh --login "which petasos"'
+ 1164  ssh justinmyers@192.168.1.104 'bash -lc && cd /Users/justinmyers/.petasos && which petasos'
+ 1165  ssh justinmyers@192.168.1.104 'bash -l && cd /Users/justinmyers/.petasos && which petasos'
+ 1166  ssh justinmyers@192.168.1.104 'bash  && cd /Users/justinmyers/.petasos && which petasos'
+ 1167  ssh justinmyers@192.168.1.104 'bash -lc "cd /Users/justinmyers/.petasos && which petasos"'
+ 1168  ssh justinmyers@192.168.1.104 'bash -lc "cd /Users/justinmyers/.petasos && petasos locations"'
+ 1171  ssh justinmyers@192.168.1.104 'which petasos'
+ 1172  ssh justinmyers@192.168.1.104 'source ~/.zshrc && which petasos'
+ 1173  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && source ~/.zshrc && "which petasos"'
+ 1174  ssh justinmyers@192.168.1.104 'cd /Users/justinmyers/.petasos && source ~/.zshrc && which petasos'
+ 1175  ssh justinmyers@192.168.1.121 'cd /Users/justinmyers/.petasos && bash -l && which petasos'
+ 1177  ssh justinmyers@192.168.1.121 'cd /Users/justinmyers/.petasos && bash -l && which petasos'
+ 1178  ssh justinmyers@192.168.1.121 'cd /Users/justinmyers/.petasos && bash -lc "which petasos"'
+ 1179  ssh justinmyers@192.168.1.121 'cd /Users/justinmyers/.petasos && which petasos'
+ 1180  ssh justinmyers@192.168.1.121 'bash -l && cd /Users/justinmyers/.petasos && which petasos'
+ 1181  ssh justinmyers@192.168.1.121 'cd /Users/justinmyers/.petasos && bash -lc "which petasos"'
+ 1190  rm petasos-0.5.4.gem 
+ 1204  gem build petasos.gemspec 
+ 1205  gem push petasos-0.5.5.gem 
+ 1206  rm petasos-0.5.5.gem 
+ 1211  gem build petasos.gemspec 
+ 1212  gem push petasos-0.5.2.gem 
+ 1214  rm petasos-0.5.2.gem 
+ 1229  gem uninstall petasos
+ 1234  git checkout test/sandbox/distributor/petasos_distribution-config.yaml
+ 1238  gem build petasos.gemspec 
+ 1239  gem push petasos-0.5.3.gem 
+ 1240  gem install petasos
+ 1258  rm petasos-0.5.3.gem 
+ 1262  git commit -am "use login shell for access to petasos command."
+ 1264  gem build petasos.gemspec 
+ 1265  gem push petasos-0.5.4.gem 
+ 1268  git commit -am "either or for petasos command in config."
+ 1800  code play/petasos/
+ 2326  history | grep petasos
+ 2327  history | grep petasos > history_of_petasos_commands.txt

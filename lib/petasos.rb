@@ -28,9 +28,18 @@ class Petasos
   def lock_and_run(mode, &block)
     lock_filename = "petasos_is_running_#{mode}"
     if !File.file?(lock_filename)
+      puts "did not find lock file #{lock_filename}"
       `touch #{lock_filename}`
-      yield
+      begin
+        yield
+      rescue StandardError => e
+        puts "petasos: error: #{e.message}"
+        puts e.backtrace
+      end
       `rm #{lock_filename}`
+    else
+      puts "found lock file #{lock_filename}"
+      puts "petasos is already running in #{mode} mode"
     end
   end
 
